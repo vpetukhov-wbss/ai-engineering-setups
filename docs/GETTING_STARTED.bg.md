@@ -35,3 +35,15 @@ python3 scripts/install.py --preset dotnet-maui --target /път/до/твоя/�
 - macOS: Mac Catalyst, подписване и евентуална notarization.
 
 **Проверка:** включеният скрипт валидира структурата на setup-а, но не компилира всички MAUI targets. Реалните проверки се извършват върху приложението и съответните build машини.
+
+## Ionic Angular + Capacitor — iOS, Android и Web/PWA
+
+```bash
+python3 scripts/install.py --preset ionic-angular --target /path/to/ionic-project
+python3 scripts/install.py --preset ionic-angular --target /path/to/ionic-project --apply
+
+# Ако в същото репозитори има ASP.NET Core:
+python3 scripts/install.py --preset dotnet-ionic-angular --target /path/to/fullstack-project --apply
+```
+
+Прочети `overlays/ionic-angular-capacitor/README.md` и добави указанията от `IONIC_CLAUDE_APPEND.md` в съществуващия CLAUDE.md. Това инсталира само инженерни правила, а не Ionic, Node, Xcode или Android SDK. Изграждането на Web bundle не доказва работеща native версия.

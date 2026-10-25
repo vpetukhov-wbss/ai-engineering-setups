@@ -4,9 +4,9 @@
 
 ### From requirements to production-ready software — with reusable AI engineering playbooks.
 
-**Claude Code · .NET / C# · Clean Architecture · Blazor · .NET MAUI · iOS · Android · Windows · macOS**
+**Claude Code · .NET / C# · Angular · Ionic / Capacitor · Blazor · .NET MAUI · iOS · Android · Windows · macOS**
 
-[Get started](#quick-start) · [Available setups](#available-setups) · [MAUI guide](overlays/maui-cross-platform/README.md) · [Engineering principles](#engineering-principles) · [Contribute](CONTRIBUTING.md)
+[Get started](#quick-start) · [Available setups](#available-setups) · [MAUI guide](overlays/maui-cross-platform/README.md) · [Angular guide](setups/angular/README.md) · [Ionic Capacitor guide](overlays/ionic-angular-capacitor/README.md) · [Engineering principles](#engineering-principles) · [Contribute](CONTRIBUTING.md)
 
 </div>
 
@@ -37,6 +37,10 @@ AI can generate code quickly. Shipping software requires more: understanding bus
 | --- | --- | --- |
 | **[`dotnet`](setups/dotnet/)** | ASP.NET Core, C#, EF Core, DDD/CQRS choices, Clean/Vertical Slice approaches, Razor, Blazor, DevOps, testing and reviews. | Included |
 | **[`dotnet-maui`](overlays/maui-cross-platform/)** | All of `dotnet`, plus native MAUI XAML/MVVM, iOS, Android, macOS (Mac Catalyst), Windows (WinUI), Blazor Hybrid, offline sync, signing, tests and store releases. | Included |
+| **[`angular`](setups/angular/)** | Angular + TypeScript, standalone UI, signals/RxJS, typed API, testing and security. | Included |
+| **[`dotnet-angular`](setups/angular/)** | ASP.NET Core backend and Angular frontend combined preset. | Included |
+| **[`ionic-angular`](overlays/ionic-angular-capacitor/)** | Angular + Ionic UI and Capacitor iOS/Android, native plugins, offline sync, auth, push, PWA and store delivery. | Included |
+| **[`dotnet-ionic-angular`](overlays/ionic-angular-capacitor/)** | .NET + Angular + Ionic/Capacitor mobile engineering in one repository. | Included |
 | `devops-homelab` | Ansible, Jenkins, Docker, source control, secure deployment, monitoring. | Planned; not included |
 | `autonomous-delivery` | GitHub Projects orchestration, isolated workers, PR/CI gates, resumable issue processing. | Planned; not included |
 
@@ -67,12 +71,26 @@ git clone https://github.com/vpetukhov-wbss/ai-engineering-setups.git
 cd ai-engineering-setups
 ```
 
-The URL becomes available **after the public repository is created and pushed**. If you downloaded the ZIP instead, open the extracted folder.
+The repository is publicly accessible at the URL above. If you downloaded its ZIP, open the extracted folder.
 
 **Preview** a .NET setup installation into an existing application:
 
 ```bash
 python3 scripts/install.py --preset dotnet --target /path/to/your-project
+```
+
+**Preview** Angular-only or .NET + Angular profiles:
+
+```bash
+python3 scripts/install.py --preset angular --target /path/to/angular-app
+python3 scripts/install.py --preset dotnet-angular --target /path/to/fullstack-app
+```
+
+**Preview** Ionic Angular + Capacitor or .NET + Ionic Angular:
+
+```bash
+python3 scripts/install.py --preset ionic-angular --target /path/to/ionic-app
+python3 scripts/install.py --preset dotnet-ionic-angular --target /path/to/fullstack-ionic-app
 ```
 
 **Preview** the full .NET + MAUI profile:
@@ -133,8 +151,21 @@ ai-engineering-setups/
 │       ├── knowledge/
 │       ├── templates/
 │       └── examples/
+├── setups/angular/               # Angular / TypeScript engineering baseline
+├── overlays/ionic-angular-capacitor/
+│   ├── IONIC_CLAUDE_APPEND.md
+│   ├── .claude/{skills,agents,rules}/
+│   ├── knowledge/
+│   ├── templates/
+│   └── examples/
 └── .github/workflows/validate.yml
 ```
+
+## Angular and Ionic Angular + Capacitor
+
+The [Angular setup](setups/angular/README.md) provides reusable frontend workflows. The [Ionic Angular + Capacitor overlay](overlays/ionic-angular-capacitor/README.md) builds on it with **13 specialist skills, 6 agents and 5 rules** for native iOS and Android mobile work: page lifecycle, tabs/back stacks, plugin adapters, permissions, offline synchronization, OAuth PKCE, App Links/Universal Links, APNs/FCM, physical-device tests, signed AAB, TestFlight and optional Web/PWA.
+
+Use `ionic-angular` for a mobile frontend repository; use `dotnet-ionic-angular` when the same repository also contains a .NET backend. **A web build is not evidence of native iOS or Android readiness.** Ionic+Capacitor does not inherently deliver native WinUI or Mac Catalyst desktop targets; use the MAUI setup for those needs.
 
 ## .NET MAUI: one product, four targets
 
@@ -187,6 +218,8 @@ Repository validation checks file layout, frontmatter and safety-sensitive sampl
 
 - [x] Base .NET/C#/Blazor architecture and delivery playbooks.
 - [x] Extended MAUI profile for iOS, Android, macOS and Windows.
+- [x] Angular frontend and .NET + Angular presets.
+- [x] Ionic Angular Capacitor mobile and .NET + Ionic combined presets.
 - [x] Idempotent, preview-first installation and structural validation.
 - [ ] Issue-driven, resumable autonomous development orchestrator.
 - [ ] DevOps/HomeLab infrastructure profile with Jenkins and Ansible.
