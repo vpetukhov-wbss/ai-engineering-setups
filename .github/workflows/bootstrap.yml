@@ -1,0 +1,50 @@
+name: Bootstrap published setup files
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/bootstrap.yml"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  unpack:
+    runs-on: ubuntu-latest
+    if: ${{ github.repository == 'vpetukhov-wbss/ai-engineering-setups' }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify and unpack package
+        run: |
+          python3 - <<'PY'
+          import base64, hashlib, io, lzma, pathlib, shutil, tarfile
+          payload=pathlib.Path("bootstrap/payload.b85")
+          expected="bae37f282be30a54b269120d18d61318a85e71dd4e04f898ce2971da8f4f7df7"
+          assert hashlib.sha256(payload.read_bytes()).hexdigest()==expected, "Unexpected payload digest"
+          data=lzma.decompress(base64.b85decode(payload.read_text("ascii").strip()))
+          root=pathlib.Path("staging-bootstrap")
+          root.mkdir(exist_ok=True)
+          with tarfile.open(fileobj=io.BytesIO(data),mode="r:") as archive:
+              for m in archive.getmembers():
+                  path=pathlib.PurePosixPath(m.name)
+                  if not path.parts or path.parts[0]!="ai-engineering-setups" or ".." in path.parts or m.issym() or m.islnk() or m.isdev():
+                      raise ValueError("Unsafe archive member: "+m.name)
+              archive.extractall(root,filter="data")
+          source=root/"ai-engineering-setups"
+          for item in source.iterdir():
+              target=pathlib.Path(item.name)
+              if item.is_dir():
+                  shutil.copytree(item,target,dirs_exist_ok=True)
+              else:
+                  shutil.copy2(item,target)
+          shutil.rmtree(root)
+          PY
+      - name: Commit published setup files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm -r -f --ignore-unmatch bootstrap/
+          git rm -f --ignore-unmatch .github/workflows/bootstrap.yml
+          git add -A
+          git diff --cached --quiet && exit 0
+          git commit -m "feat: publish .NET MAUI and Angular AI engineering setups"
+          git push origin HEAD:main
