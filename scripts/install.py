@@ -57,6 +57,9 @@ def main() -> int:
     merged = collect(ANGULAR, {'README.md', 'ANGULAR_CLAUDE_APPEND.md'}) if args.preset in ('angular','ionic-angular') else collect(BASE, {'README.md', 'HANDBOOK.md'})
     if args.preset in ('dotnet-angular','dotnet-ionic-angular'):
         angular = collect(ANGULAR, {'README.md', 'ANGULAR_CLAUDE_APPEND.md', 'CLAUDE.md'})
+        sources_path = Path('knowledge/SOURCES.md')
+        if sources_path in angular and sources_path in merged:
+            angular[Path('knowledge/ANGULAR_SOURCES.md')] = angular.pop(sources_path)
         merged.update(angular)
     if args.preset == 'dotnet-maui':
         overlay = collect(MAUI, EXCLUDE)

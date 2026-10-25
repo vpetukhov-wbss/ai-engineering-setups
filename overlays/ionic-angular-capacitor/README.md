@@ -64,4 +64,4 @@ For existing apps, inspect actual versions and do not recreate native projects. 
 A web build cannot certify mobile device behavior. Skills guide an agent; they do not automatically sign or publish apps.
 
 ## References
-See [MOBILE_ARCHITECTURE.md](knowledge/MOBILE_ARCHITECTURE.md), [NATIVE_SECURITY_OFFLINE.md](knowledge/NATIVE_SECURITY_OFFLINE.md), [RELEASE_TEST_MATRIX.md](knowledge/RELEASE_TEST_MATRIX.md) and [SOURCES.md](knowledge/SOURCES.md).
+See [MOBILE_ARCHITECTURE.md](knowledge/MOBILE_ARCHITECTURE.md), [NATIVE_SECURITY_OFFLINE.md](knowledge/NATIVE_SECURITY_OFFLINE.md), [RELEASE_TEST_MATRIX.md](knowledge/RELEASE_TEST_MATRIX.md) and [SOURCES.md](knowledge/IONIC_SOURCES.md).
