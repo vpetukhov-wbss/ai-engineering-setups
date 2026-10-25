@@ -37,13 +37,13 @@ jobs:
               else:
                   shutil.copy2(item,target)
           shutil.rmtree(root)
+          pathlib.Path(".github/workflows/validate.yml").unlink(missing_ok=True)
           PY
       - name: Commit published setup files
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git rm -r -f --ignore-unmatch bootstrap/
-          git rm -f --ignore-unmatch .github/workflows/bootstrap.yml
           git add -A
           git diff --cached --quiet && exit 0
           git commit -m "feat: publish .NET MAUI and Angular AI engineering setups"
