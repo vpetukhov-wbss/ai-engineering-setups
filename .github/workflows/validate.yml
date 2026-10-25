@@ -1,0 +1,26 @@
+name: Validate AI setups
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate repository structure
+        run: python3 scripts/validate-repository.py
+      - name: Verify .NET MAUI and Angular installation
+        shell: bash
+        run: |
+          mkdir -p /tmp/ai-maui /tmp/ai-angular /tmp/ai-fullstack
+          python3 scripts/install.py --preset dotnet-maui --target /tmp/ai-maui --apply
+          python3 scripts/install.py --preset angular --target /tmp/ai-angular --apply
+          python3 scripts/install.py --preset dotnet-angular --target /tmp/ai-fullstack --apply
+          test -f /tmp/ai-maui/.claude/skills/maui-feature/SKILL.md
+          test -f /tmp/ai-angular/.claude/skills/angular-feature/SKILL.md
+          test -f /tmp/ai-fullstack/.claude/skills/dotnet-feature/SKILL.md
+          test -f /tmp/ai-fullstack/.claude/skills/angular-api-integration/SKILL.md
