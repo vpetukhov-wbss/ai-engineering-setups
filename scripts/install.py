@@ -19,6 +19,7 @@ ROOT = Path(__file__).resolve().parents[1]
 BASE = ROOT / 'setups' / 'dotnet'
 MAUI = ROOT / 'overlays' / 'maui-cross-platform'
 ANGULAR = ROOT / 'setups' / 'angular'
+IONIC = ROOT / 'overlays' / 'ionic-angular-capacitor'
 EXCLUDE = {'README.md', 'MAUI_CLAUDE_APPEND.md'}
 
 def digest(file: Path) -> str:
@@ -39,7 +40,7 @@ def collect(base: Path, ignore: set[str]) -> dict[Path, Path]:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--preset', choices=('dotnet', 'dotnet-maui', 'angular', 'dotnet-angular'), required=True)
+    parser.add_argument('--preset', choices=('dotnet', 'dotnet-maui', 'angular', 'dotnet-angular', 'ionic-angular', 'dotnet-ionic-angular'), required=True)
     parser.add_argument('--target', type=Path, required=True)
     parser.add_argument('--apply', action='store_true', help='Actually copy files (default: preview)')
     parser.add_argument('--overwrite', action='store_true', help='Replace conflicting files; BACK UP FIRST')
@@ -53,13 +54,15 @@ def main() -> int:
         parser.error('Target directory must already exist (create your app repository first)')
     if target.exists() and not target.is_dir():
         parser.error('Target must be a directory')
-    merged = collect(ANGULAR, {'README.md', 'ANGULAR_CLAUDE_APPEND.md'}) if args.preset == 'angular' else collect(BASE, {'README.md', 'HANDBOOK.md'})
-    if args.preset == 'dotnet-angular':
+    merged = collect(ANGULAR, {'README.md', 'ANGULAR_CLAUDE_APPEND.md'}) if args.preset in ('angular','ionic-angular') else collect(BASE, {'README.md', 'HANDBOOK.md'})
+    if args.preset in ('dotnet-angular','dotnet-ionic-angular'):
         angular = collect(ANGULAR, {'README.md', 'ANGULAR_CLAUDE_APPEND.md', 'CLAUDE.md'})
         merged.update(angular)
     if args.preset == 'dotnet-maui':
         overlay = collect(MAUI, EXCLUDE)
         merged.update(overlay)  # explicit overlay wins only within preset payload
+    if args.preset in ('ionic-angular', 'dotnet-ionic-angular'):
+        merged.update(collect(IONIC, {'README.md', 'IONIC_CLAUDE_APPEND.md'}))
     actions: dict[str, list[Path]] = {'new': [], 'same': [], 'conflict': []}
     for rel, source in sorted(merged.items()):
         destination = target / rel
@@ -94,8 +97,10 @@ def main() -> int:
         print('DRY RUN ONLY. Re-run with --apply after reviewing the file plan.')
     if args.preset == 'dotnet-maui':
         print('NOTE: review overlays/maui-cross-platform/MAUI_CLAUDE_APPEND.md and merge guidance into your project CLAUDE.md.')
-    if args.preset == 'dotnet-angular':
+    if args.preset in ('dotnet-angular','dotnet-ionic-angular'):
         print('NOTE: review setups/angular/ANGULAR_CLAUDE_APPEND.md and merge guidance into your project CLAUDE.md.')
+    if args.preset in ('ionic-angular','dotnet-ionic-angular'):
+        print('NOTE: merge overlays/ionic-angular-capacitor/IONIC_CLAUDE_APPEND.md into project CLAUDE.md manually.')
     return 0
 
 if __name__ == '__main__':

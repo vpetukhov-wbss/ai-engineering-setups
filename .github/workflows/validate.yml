@@ -24,3 +24,14 @@ jobs:
           test -f /tmp/ai-angular/.claude/skills/angular-feature/SKILL.md
           test -f /tmp/ai-fullstack/.claude/skills/dotnet-feature/SKILL.md
           test -f /tmp/ai-fullstack/.claude/skills/angular-api-integration/SKILL.md
+      - name: Verify Ionic Angular Capacitor installer
+        run: |
+          mkdir -p /tmp/ionic-app /tmp/fullstack-ionic-app
+          python3 scripts/install.py --preset ionic-angular --target /tmp/ionic-app --apply
+          test -f /tmp/ionic-app/CLAUDE.md
+          test -f /tmp/ionic-app/.claude/skills/angular-feature/SKILL.md
+          test -f /tmp/ionic-app/.claude/skills/ionic-feature/SKILL.md
+          python3 scripts/install.py --preset dotnet-ionic-angular --target /tmp/fullstack-ionic-app --apply
+          test -f /tmp/fullstack-ionic-app/.claude/skills/dotnet-feature/SKILL.md
+          test -f /tmp/fullstack-ionic-app/.claude/skills/angular-feature/SKILL.md
+          test -f /tmp/fullstack-ionic-app/.claude/skills/ionic-device-testing/SKILL.md
