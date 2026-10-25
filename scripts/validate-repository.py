@@ -9,10 +9,11 @@ ROOT = Path(__file__).resolve().parents[1]
 BASE = ROOT/'setups'/'dotnet'
 MAUI = ROOT/'overlays'/'maui-cross-platform'
 ANGULAR = ROOT/'setups'/'angular'
+IONIC = ROOT/'overlays'/'ionic-angular-capacitor'
 errors=[]
 for file in ('README.md','LICENSE','CONTRIBUTING.md','SECURITY.md','scripts/install.py'):
     if not (ROOT/file).is_file(): errors.append(f'Missing {file}')
-for root in (BASE,MAUI,ANGULAR):
+for root in (BASE,MAUI,ANGULAR,IONIC):
     if not root.is_dir(): errors.append(f'Missing {root.relative_to(ROOT)}'); continue
     for p in root.rglob('*'):
         if p.is_symlink(): errors.append(f'Symlink forbidden: {p}')
@@ -46,6 +47,9 @@ print('MAUI skills:',len(list((MAUI/'.claude'/'skills').glob('*/SKILL.md'))))
 print('MAUI agents:',len(list((MAUI/'.claude'/'agents').glob('*.md'))))
 print('Angular skills:',len(list((ANGULAR/'.claude'/'skills').glob('*/SKILL.md'))))
 print('Angular agents:',len(list((ANGULAR/'.claude'/'agents').glob('*.md'))))
+print('Ionic skills:',len(list((IONIC/'.claude'/'skills').glob('*/SKILL.md'))))
+print('Ionic agents:',len(list((IONIC/'.claude'/'agents').glob('*.md'))))
+if len(list((IONIC/'.claude'/'skills').glob('*/SKILL.md'))) < 10: errors.append('Missing Ionic skills')
 for err in errors: print('ERROR:',err)
 if errors: sys.exit(1)
 print('PASS: file layout, basic metadata and sample-secret file extension checks.')
