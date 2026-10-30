@@ -29,6 +29,9 @@ Transform business requirements into maintainable, secure, observable and deploy
 ## Workflow
 Inspect → short implementation plan → select relevant `/skill` → implement a thin slice → tests → review security/performance/operability → run `bash scripts/quality-gate.sh` if present → concise evidence report. For small fixes keep this lightweight.
 
+## Async correctness
+Apply `.claude/rules/dotnet-async-concurrency.md` in C#/Razor/MAUI changes and use `/async-concurrency-review` for significant asynchronous work. Do not confuse concurrency with parallelism: bound fan-out and never share an EF Core DbContext across concurrent operations. See `knowledge/ASYNC_AWAIT_CONCURRENCY.md`.
+
 ## On-demand references
 - Architecture: `knowledge/ARCHITECTURE_PLAYBOOK.md`
 - C# / API / EF: `knowledge/DOTNET_CSHARP.md`, `knowledge/EFCORE_DATABASES.md`, `knowledge/API_SECURITY.md`
