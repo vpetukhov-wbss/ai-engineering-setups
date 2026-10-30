@@ -13,6 +13,13 @@
 - **MJ09** — Partial failures in use cases: https://milanjovanovic.tech/blog/when-your-use-case-half-succeeds-designing-for-partial-failure-in-dotnet
 - **MJ10** — Free templates including Claude Code-related resources (NOT copied): https://milanjovanovic.tech/
 
+## Aram Tchekrekjian — async/await guidance (2026-10-30)
+- **AT01** — Public post "12 Async/Await Mistakes in C#" (verified; separate from user's recently highlighted **7**-point post, whose full text was not retrievable): https://www.linkedin.com/posts/aramt87_%F0%9D%9F%AD%F0%9D%9F%AE-%F0%9D%97%94%F0%9D%98%80%F0%9D%98%86%F0%9D%97%BB%F0%9D%97%B0%F0%9D%97%94%F0%9D%98%84%F0%9D%97%AE%F0%9D%97%B6%F0%9D%98%81-%F0%9D%97%A0%F0%9D%97%B6%F0%9D%98%80%F0%9D%98%81%F0%9D%97%AE%F0%9D%97%B8%F0%9D%97%B2-activity-7496456880777715713-wfom
+- **MS17** — C# async/await semantics, fault handling and composition: https://learn.microsoft.com/en-us/dotnet/csharp/asynchronous-programming/
+- **MS18** — Async scenarios and async void/Task.Run: https://learn.microsoft.com/en-us/dotnet/csharp/asynchronous-programming/async-scenarios
+- **MS19** — Hosted/background services and shutdown behavior: https://learn.microsoft.com/en-us/aspnet/core/fundamentals/host/hosted-services
+- **MS20** — Stephen Toub's ConfigureAwait FAQ: https://devblogs.microsoft.com/dotnet/configureawait-faq/
+
 ## Nick Chapsas
 - **NC01** — Nick's .NET Knowledge Drops public blog: https://nickchapsas.com/tag/blog/
 - **NC02** — Nick's unit testing introduction listed in that public blog: https://nickchapsas.com/tag/blog/

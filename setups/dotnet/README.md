@@ -19,6 +19,11 @@ A project-agnostic, original synthesis of public engineering guidance from Milan
 - `templates/`: reusable business briefs, ADRs, plans, review and release evidence.
 - `scripts/`: explicit deterministic checks (no unsafe post-edit execution installed by default).
 
+## Async/await and concurrency guidance (2026-10-30)
+- [Async/await, cancellation and bounded-concurrency playbook](knowledge/ASYNC_AWAIT_CONCURRENCY.md): original, source-checked synthesis of public Aram Tchekrekjian guidance and Microsoft .NET documentation. The specific new seven-point post is not quoted because its full text was not independently retrieved.
+- [Path-scoped Claude rule](.claude/rules/dotnet-async-concurrency.md) applies to C#, Razor, MAUI code.
+- Use `/async-concurrency-review` for fault, cancellation, EF Core parallelism, service-lifetime and background-work reviews.
+
 ## Typical lifecycle
 **Business ask → clarify only critical unknowns → architecture options & tradeoffs → accepted decision/ADR → thin vertical slice → tests → quality gate → security/performance review → CI/CD & rollout → evidence-based completion.**
 
